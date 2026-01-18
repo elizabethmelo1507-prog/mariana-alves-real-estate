@@ -1,0 +1,244 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* * CONFIGURAÇÃO GERAL */
+body {
+    font-family: 'Manrope', sans-serif;
+    /* Keeping existing font */
+    margin: 0;
+    padding: 0;
+    /* background-color: #f3f4f6;  Let Tailwind handle bg */
+    overflow-x: hidden;
+}
+
+/* * CONTAINER DE ANIMAÇÃO */
+#intro-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+/* Camada de fundo branco */
+.bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    transition: opacity 0.8s ease-in-out;
+    z-index: 1;
+}
+
+.bg-layer.finished {
+    opacity: 0;
+}
+
+/* * O ÍCONE DA CASA (SVG) 
+    * Estado Inicial: Grande e Centralizado
+    */
+.logo-svg {
+    position: fixed;
+    z-index: 2;
+
+    /* CENTRALIZAÇÃO CORRIGIDA (Evita a "escapada" lateral) */
+    top: 50%;
+    left: 50%;
+    width: 140px;
+    height: 140px;
+
+    /* Usamos margem negativa fixa (metade da largura) em vez de transform % 
+        Isso garante que o centro geométrico seja estável durante a mudança de tamanho */
+    margin-left: -70px;
+    margin-top: -70px;
+
+    /* A COR DA LOGO */
+    stroke: #00ff88;
+    /* Primary Color */
+    stroke-width: 1.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    /* Transição suave para o canto */
+    transition:
+        top 1.2s cubic-bezier(0.65, 0, 0.35, 1),
+        left 1.2s cubic-bezier(0.65, 0, 0.35, 1),
+        width 1.2s cubic-bezier(0.65, 0, 0.35, 1),
+        height 1.2s cubic-bezier(0.65, 0, 0.35, 1),
+        margin 1.2s cubic-bezier(0.65, 0, 0.35, 1),
+        /* Adicionado margin na transição */
+        stroke-width 1.2s ease;
+}
+
+/* * ANIMAÇÃO DOS TRAÇOS */
+.logo-svg path,
+.logo-svg polyline {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    opacity: 0;
+}
+
+.logo-svg.constructing path,
+.logo-svg.constructing polyline {
+    animation: drawLines 2s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
+.logo-svg.constructing {
+    /* Anima apenas o eixo Y levemente, sem afetar a centralização X */
+    animation: slideUp 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes drawLines {
+    0% {
+        stroke-dashoffset: 100;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(20px);
+    }
+
+    /* Começa 20px mais baixo */
+    100% {
+        transform: translateY(0);
+    }
+
+    /* Termina no centro exato */
+}
+
+
+/* * ESTADO FINAL (No canto superior esquerdo) */
+.logo-svg.moved-to-header {
+    /* Adjust these to match the navbar logo position */
+    /* Navbar padding is px-6 (24px). Logo container is size-10 (40px). */
+    /* So top should be roughly (Navbar Height - Logo Height) / 2 */
+    /* Navbar py-4 (16px). Height = 16+16+40 = 72px? */
+    /* Let's stick to user's 24px for now, it matches px-6 */
+    top: 28px;
+    /* 16px padding + some offset? Let's try 24px first */
+    left: 24px;
+
+    /* Removemos a margem de centralização para posicionar no 0,0 do container */
+    margin-left: 0;
+    margin-top: 0;
+
+    width: 40px;
+    height: 40px;
+
+    /* Garante que não tenha transformações residuais */
+    transform: none !important;
+
+    opacity: 1 !important;
+    stroke-width: 2.5;
+}
+
+.logo-svg.moved-to-header path,
+.logo-svg.moved-to-header polyline {
+    stroke-dashoffset: 0 !important;
+    opacity: 1 !important;
+}
+
+/* * BOTÃO EFEITO LÍQUIDO */
+.btn-liquido {
+    position: relative;
+    /* padding: 20px 50px;  Removed fixed padding to fit existing layout */
+    text-decoration: none;
+    /* text-transform: uppercase; Removed to match existing design */
+    /* font-size: 18px; Removed */
+    /* font-weight: bold; Removed */
+    /* letter-spacing: 2px; Removed */
+
+    /* ESTADO INICIAL: Mantendo o estilo original do card, mas preparando para o efeito */
+    /* color: #000000;  Inherit from parent */
+    /* border: 2px solid #000000;  Border is handled by Tailwind classes */
+    /* background-color: white; Handled by Tailwind */
+
+    overflow: hidden;
+    /* IMPORTANTE: Isso impede que o "líquido" saia para fora do botão */
+    transition: all 0.5s ease;
+    /* Transição suave para cores e bordas */
+    cursor: pointer;
+    z-index: 1;
+    /* Garante que o texto fique acima do líquido */
+    /* border-radius: 40px; Handled by Tailwind */
+}
+
+/* O TEXTO (Span para garantir z-index se necessário) */
+.btn-liquido>* {
+    position: relative;
+    z-index: 2;
+    /* Garante que o conteúdo fique na frente do verde */
+}
+
+/* * O LÍQUIDO (Elemento ::before)
+    * Imagine uma caixa grande girando embaixo do botão.
+    */
+.btn-liquido::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    /* Começa escondido lá embaixo */
+    transform: translate(-50%, 0);
+
+    width: 200%;
+    /* Mais largo que o botão para cobrir tudo ao girar */
+    padding-bottom: 200%;
+    /* Aspect ratio hack for square */
+    height: auto;
+    /* Bem alto */
+
+    background-color: #00ff88;
+    /* A cor do líquido (Verde Primary) */
+    border-radius: 45%;
+    /* Isso cria a forma irregular/curva */
+
+    transition: all 0.8s ease-in-out;
+    /* Velocidade da subida */
+    z-index: -1;
+    /* Fica atrás do texto */
+}
+
+/* * ESTADO DE HOVER (Quando passa o mouse)
+    */
+.btn-liquido:hover {
+    /* color: white;  We might want to keep text dark if bg is bright green, or make it black? */
+    /* Let's see. Primary is #00ff88 (bright green). Black text is better on it. */
+    border-color: #00ff88;
+    /* A borda vira verde */
+}
+
+.btn-liquido:hover::before {
+    top: -50%;
+    /* Sobe o líquido até cobrir o botão */
+    animation: girar 6s linear infinite;
+    /* Começa a girar */
+}
+
+/* Animação que faz a "água" se mexer */
+@keyframes girar {
+    0% {
+        transform: translate(-50%, 0) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, 0) rotate(360deg);
+    }
+}

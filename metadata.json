@@ -1,0 +1,7 @@
+{
+  "name": "Mariana Alves Real Estate Link-in-Bio & Admin",
+  "description": "A comprehensive real estate portal and administrative dashboard for brokers, featuring property listings, credit simulation, and lead management.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
