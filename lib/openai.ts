@@ -1,6 +1,8 @@
 import OpenAI from 'openai';
 
+const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+
 export const openai = new OpenAI({
-    apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+    apiKey: apiKey || 'dummy-key-for-build',
     dangerouslyAllowBrowser: true
 });
