@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages/Public/Home';
+import Landing from './pages/Public/Landing';
 import Catalog from './pages/Public/Catalog';
 import PropertyDetail from './pages/Public/PropertyDetail';
 import Launches from './pages/Public/Launches';
@@ -33,7 +33,7 @@ const App: React.FC = () => {
     <HashRouter>
       <Routes>
         {/* Public Client Routes */}
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/catalog" element={<Catalog title="Catálogo Completo" />} />
         <Route path="/launches" element={<Launches />} />
         <Route path="/rent" element={<Catalog title="Aluguel em Manaus" showPriceSuffix="/mês" />} />
