@@ -128,7 +128,7 @@ const SitePreview: React.FC<SitePreviewProps> = ({ config, viewMode }) => {
                         <div className="size-3 rounded-full bg-green-400"></div>
                     </div>
                     <div className="flex-1 bg-white rounded-md px-3 py-1 text-xs text-gray-400 text-center font-mono">
-                        {config.subdomain || 'seu-site'}.brokerlink.com
+                        brokerlink.netlify.app/s/{config.subdomain || 'seu-site'}
                     </div>
                 </div>
             )}

@@ -226,18 +226,20 @@ const SiteEditor: React.FC = () => {
                             {activeTab === 'content' && (
                                 <div className="space-y-4">
                                     <div>
-                                        <label className="block text-xs font-bold text-gray-500 mb-2">Subdomínio</label>
+                                        <label className="block text-xs font-bold text-gray-500 mb-2">Endereço do Site (Slug)</label>
                                         <div className="flex items-center">
+                                            <div className="bg-gray-100 px-3 py-2 rounded-l-lg border border-r-0 border-gray-200 text-gray-500 text-sm font-medium whitespace-nowrap">
+                                                brokerlink.netlify.app/s/
+                                            </div>
                                             <input
                                                 type="text"
-                                                className="flex-1 px-3 py-2 rounded-l-lg border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm text-right"
+                                                className="flex-1 px-3 py-2 rounded-r-lg border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
                                                 value={config.subdomain}
                                                 onChange={(e) => setConfig({ ...config, subdomain: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '') })}
+                                                placeholder="nome-da-corretora"
                                             />
-                                            <div className="bg-gray-100 px-3 py-2 rounded-r-lg border border-l-0 border-gray-200 text-gray-500 text-sm font-medium">
-                                                .brokerlink.com
-                                            </div>
                                         </div>
+                                        <p className="text-[10px] text-gray-400 mt-1">Este será o link que você enviará para seus clientes.</p>
                                     </div>
                                     <div>
                                         <label className="block text-xs font-bold text-gray-500 mb-2">Título do Site</label>
@@ -377,10 +379,10 @@ const SiteEditor: React.FC = () => {
 
                         <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-8 flex items-center justify-between gap-3">
                             <span className="text-sm font-mono text-gray-600 truncate">
-                                https://{config.subdomain}.brokerlink.com
+                                https://brokerlink.netlify.app/s/{config.subdomain}
                             </span>
                             <button
-                                onClick={() => navigator.clipboard.writeText(`https://${config.subdomain}.brokerlink.com`)}
+                                onClick={() => navigator.clipboard.writeText(`https://brokerlink.netlify.app/s/${config.subdomain}`)}
                                 className="text-primary hover:text-green-600 font-bold text-xs uppercase"
                             >
                                 Copiar
