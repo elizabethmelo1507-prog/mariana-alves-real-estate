@@ -54,7 +54,6 @@ const App: React.FC = () => {
         <Route path="/admin/priorities" element={<Priorities />} />
         <Route path="/admin/proposals" element={<Proposals />} />
         <Route path="/admin/documents" element={<Documents />} />
-        <Route path="/admin/documents" element={<Documents />} />
         <Route path="/admin/finance" element={<Finance />} />
         <Route path="/admin/automation" element={<Automation />} />
         <Route path="/admin/profile" element={<Profile />} />
