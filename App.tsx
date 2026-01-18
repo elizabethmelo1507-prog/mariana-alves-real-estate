@@ -23,6 +23,9 @@ import Automation from './pages/Admin/Automation';
 import Profile from './pages/Admin/Profile';
 import Settings from './pages/Admin/Settings';
 import Reactivation from './pages/Admin/Reactivation';
+import SignUp from './pages/Auth/SignUp';
+import OnboardingWizard from './pages/Admin/Onboarding/Wizard';
+import SiteEditor from './pages/Admin/SiteEditor';
 
 const App: React.FC = () => {
   return (
@@ -56,6 +59,11 @@ const App: React.FC = () => {
         <Route path="/admin/profile" element={<Profile />} />
         <Route path="/admin/settings" element={<Settings />} />
         <Route path="/admin/reactivation" element={<Reactivation />} />
+        <Route path="/admin/site-editor" element={<SiteEditor />} />
+
+        {/* SaaS / Onboarding Routes */}
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/onboarding" element={<OnboardingWizard />} />
       </Routes>
     </HashRouter>
   );

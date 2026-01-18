@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
-  activeTab: 'home' | 'properties' | 'leads' | 'calendar' | 'visits' | 'settings' | 'priorities' | 'proposals' | 'documents' | 'content' | 'finance' | 'automation' | 'reactivation';
+  activeTab: 'home' | 'properties' | 'leads' | 'calendar' | 'visits' | 'settings' | 'priorities' | 'proposals' | 'documents' | 'content' | 'finance' | 'automation' | 'reactivation' | 'site-editor';
 }
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children, activeTab }) => {
@@ -12,6 +12,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, activeTab }) => {
 
   const tabs = [
     { id: 'home', label: 'Dashboard', icon: 'dashboard', path: '/admin/dashboard' },
+    { id: 'site-editor', label: 'Meu Site', icon: 'web', path: '/admin/site-editor' },
     { id: 'automation', label: 'Automações', icon: 'bolt', path: '/admin/automation' },
     { id: 'finance', label: 'Financeiro', icon: 'payments', path: '/admin/finance' },
     { id: 'priorities', label: 'Prioridades', icon: 'priority_high', path: '/admin/priorities' },
