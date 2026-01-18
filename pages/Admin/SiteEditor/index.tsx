@@ -17,21 +17,23 @@ const SiteEditor: React.FC = () => {
         template: 'Minimalista' as 'Minimalista' | 'Luxo' | 'Foco em Leads',
         regions: 'Ponta Negra, Adrianópolis, Vieiralves',
         subdomain: 'marianaalves',
-        sections: {
-            'Destaques da Semana': true,
-            'Serviços Exclusivos': true,
-            'Depoimentos': true,
-            'Sobre Mim': true,
-            'FAQ': true
-        } as Record<string, boolean>,
-        formFields: {
-            'Nome': true,
-            'Telefone': true,
-            'E-mail': true,
-            'Mensagem': true,
-            'Faixa de Preço': false,
-            'Bairro de Interesse': false
-        } as Record<string, boolean>
+        sections: [
+            { id: 'hero', label: 'Capa (Hero)', enabled: true, fixed: true },
+            { id: 'stats', label: 'Estatísticas Rápidas', enabled: true },
+            { id: 'services', label: 'Serviços Exclusivos', enabled: true },
+            { id: 'featured', label: 'Destaques da Semana', enabled: true },
+            { id: 'testimonials', label: 'Depoimentos', enabled: true },
+            { id: 'about', label: 'Sobre Mim', enabled: true },
+            { id: 'faq', label: 'Perguntas Frequentes', enabled: true }
+        ],
+        formFields: [
+            { id: 'name', label: 'Nome', enabled: true, required: true },
+            { id: 'phone', label: 'Telefone (WhatsApp)', enabled: true, required: true },
+            { id: 'email', label: 'E-mail', enabled: true, required: false },
+            { id: 'price_range', label: 'Faixa de Preço', enabled: false, required: false },
+            { id: 'location', label: 'Bairro de Interesse', enabled: false, required: false },
+            { id: 'message', label: 'Mensagem', enabled: true, required: false }
+        ]
     });
 
     const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,29 +48,32 @@ const SiteEditor: React.FC = () => {
     };
 
     const handlePublish = () => {
-        // Simulate API call
         setTimeout(() => {
             setShowSuccessModal(true);
         }, 1000);
     };
 
-    const toggleSection = (section: string) => {
+    const toggleSection = (id: string) => {
         setConfig(prev => ({
             ...prev,
-            sections: {
-                ...prev.sections,
-                [section]: !prev.sections[section]
-            }
+            sections: prev.sections.map(s => s.id === id && !s.fixed ? { ...s, enabled: !s.enabled } : s)
         }));
     };
 
-    const toggleFormField = (field: string) => {
+    const moveSection = (index: number, direction: 'up' | 'down') => {
+        const newSections = [...config.sections];
+        if (direction === 'up' && index > 0) {
+            [newSections[index], newSections[index - 1]] = [newSections[index - 1], newSections[index]];
+        } else if (direction === 'down' && index < newSections.length - 1) {
+            [newSections[index], newSections[index + 1]] = [newSections[index + 1], newSections[index]];
+        }
+        setConfig(prev => ({ ...prev, sections: newSections }));
+    };
+
+    const toggleFormField = (id: string, field: 'enabled' | 'required') => {
         setConfig(prev => ({
             ...prev,
-            formFields: {
-                ...prev.formFields,
-                [field]: !prev.formFields[field]
-            }
+            formFields: prev.formFields.map(f => f.id === id ? { ...f, [field]: !f[field] } : f)
         }));
     };
 
@@ -265,42 +270,88 @@ const SiteEditor: React.FC = () => {
 
                             {activeTab === 'sections' && (
                                 <div className="space-y-4">
-                                    <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Gerenciar Seções</h3>
-                                    {Object.keys(config.sections).map(section => (
-                                        <div key={section} className="flex items-center justify-between p-3 border border-gray-100 rounded-xl bg-gray-50">
-                                            <div className="flex items-center gap-3">
-                                                <span className="material-symbols-outlined text-gray-400 cursor-move">drag_indicator</span>
-                                                <span className="font-bold text-gray-700 text-sm">{section}</span>
+                                    <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Organizar Seções</h3>
+                                    <div className="space-y-2">
+                                        {config.sections.map((section, index) => (
+                                            <div key={section.id} className={`flex items-center justify-between p-3 border rounded-xl transition-all ${section.enabled ? 'bg-white border-gray-200' : 'bg-gray-50 border-gray-100 opacity-60'}`}>
+                                                <div className="flex items-center gap-3">
+                                                    <div className="flex flex-col gap-1">
+                                                        <button
+                                                            onClick={() => moveSection(index, 'up')}
+                                                            disabled={index === 0}
+                                                            className="text-gray-300 hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed"
+                                                        >
+                                                            <span className="material-symbols-outlined text-sm">keyboard_arrow_up</span>
+                                                        </button>
+                                                        <button
+                                                            onClick={() => moveSection(index, 'down')}
+                                                            disabled={index === config.sections.length - 1}
+                                                            className="text-gray-300 hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed"
+                                                        >
+                                                            <span className="material-symbols-outlined text-sm">keyboard_arrow_down</span>
+                                                        </button>
+                                                    </div>
+                                                    <span className="font-bold text-gray-700 text-sm">{section.label}</span>
+                                                </div>
+
+                                                {!section.fixed && (
+                                                    <label className="relative inline-flex items-center cursor-pointer">
+                                                        <input
+                                                            type="checkbox"
+                                                            className="sr-only peer"
+                                                            checked={section.enabled}
+                                                            onChange={() => toggleSection(section.id)}
+                                                        />
+                                                        <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+                                                    </label>
+                                                )}
+                                                {section.fixed && (
+                                                    <span className="text-[10px] uppercase font-bold text-gray-400 bg-gray-100 px-2 py-1 rounded">Fixo</span>
+                                                )}
                                             </div>
-                                            <label className="relative inline-flex items-center cursor-pointer">
-                                                <input
-                                                    type="checkbox"
-                                                    className="sr-only peer"
-                                                    checked={config.sections[section]}
-                                                    onChange={() => toggleSection(section)}
-                                                />
-                                                <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
-                                            </label>
-                                        </div>
-                                    ))}
+                                        ))}
+                                    </div>
                                 </div>
                             )}
 
                             {activeTab === 'form' && (
                                 <div className="space-y-4">
-                                    <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Campos do Formulário</h3>
-                                    <p className="text-xs text-gray-500 mb-4">Escolha quais informações você quer coletar dos seus leads.</p>
-                                    {Object.keys(config.formFields).map(field => (
-                                        <div key={field} className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg transition-colors">
-                                            <input
-                                                type="checkbox"
-                                                className="h-4 w-4 text-primary rounded border-gray-300 focus:ring-primary cursor-pointer"
-                                                checked={config.formFields[field]}
-                                                onChange={() => toggleFormField(field)}
-                                            />
-                                            <span className="text-gray-700 font-medium text-sm">{field}</span>
-                                        </div>
-                                    ))}
+                                    <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Configurar Formulário</h3>
+                                    <p className="text-xs text-gray-500 mb-4">Personalize os campos do seu formulário de contato.</p>
+
+                                    <div className="space-y-3">
+                                        {config.formFields.map(field => (
+                                            <div key={field.id} className="p-3 border border-gray-100 rounded-xl bg-white hover:border-gray-200 transition-colors">
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <span className="font-bold text-gray-700 text-sm">{field.label}</span>
+                                                    <label className="relative inline-flex items-center cursor-pointer">
+                                                        <input
+                                                            type="checkbox"
+                                                            className="sr-only peer"
+                                                            checked={field.enabled}
+                                                            onChange={() => toggleFormField(field.id, 'enabled')}
+                                                        />
+                                                        <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+                                                    </label>
+                                                </div>
+
+                                                {field.enabled && (
+                                                    <div className="flex items-center gap-2 mt-2 pt-2 border-t border-gray-50">
+                                                        <input
+                                                            type="checkbox"
+                                                            id={`req-${field.id}`}
+                                                            checked={field.required}
+                                                            onChange={() => toggleFormField(field.id, 'required')}
+                                                            className="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4"
+                                                        />
+                                                        <label htmlFor={`req-${field.id}`} className="text-xs text-gray-500 select-none cursor-pointer">
+                                                            Campo Obrigatório
+                                                        </label>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             )}
                         </div>
