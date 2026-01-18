@@ -5,10 +5,14 @@ const supabaseUrl = (import.meta as any).env.VITE_SUPABASE_URL;
 const supabaseAnonKey = (import.meta as any).env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error('Missing Supabase environment variables');
+    console.error('CRITICAL: Missing Supabase environment variables. The app will not function correctly.');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Initialize with fallback to prevent immediate crash, but calls will fail
+export const supabase = createClient(
+    supabaseUrl || 'https://placeholder.supabase.co',
+    supabaseAnonKey || 'placeholder-key'
+);
 
 const getSetting = async (key: string, defaultValue: string): Promise<string> => {
     try {
