@@ -403,12 +403,93 @@ export interface Property {
   address?: string;
 }
 
-export interface Appointment {
+
+// ... existing types ...
+
+// SaaS / Self-Service Types
+
+export type PlanType = 'FREE' | 'PRO' | 'PREMIUM';
+export type PlanStatus = 'ACTIVE' | 'PENDING' | 'CANCELLED' | 'EXPIRED';
+export type PaymentProvider = 'STRIPE' | 'ASAAS' | 'HOTMART';
+
+export interface UserProfile {
   id: string;
-  time: string;
-  client: string;
-  property: string;
-  duration: string;
-  status: 'Confirmada' | 'Pendente';
-  avatar?: string;
+  name: string;
+  email: string;
+  whatsapp: string;
+  creci: string;
+  domain?: string; // custom domain or subdomain
+  subdomain?: string; // e.g. "mariana" in mariana.brokerlink.com
+  logoUrl?: string;
+  coverPhotoUrl?: string;
+  description?: string;
+  regionsServed?: string[];
+  brandColors?: {
+    primary: string;
+    secondary: string;
+    background: string;
+    text: string;
+  };
+  plan: PlanType;
+  planStatus: PlanStatus;
+  planRenewalDate?: string;
+  commissionRateDefault?: number;
+  emailVerified: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
+
+export interface SiteConfig {
+  userId: string;
+  templateId: 'MINIMAL' | 'LUXURY' | 'LEAD_FOCUS';
+  sectionsOrder: string[]; // ['hero', 'featured', 'services', 'testimonials', 'faq']
+  sectionsEnabled: Record<string, boolean>;
+  customDomain?: string;
+  dnsConfig?: {
+    cname: string;
+    verified: boolean;
+  };
+  contactFormFields: {
+    key: string;
+    label: string;
+    type: 'text' | 'email' | 'phone' | 'select' | 'number';
+    required: boolean;
+    enabled: boolean;
+    options?: string[]; // for select
+  }[];
+}
+
+export interface Integration {
+  id: string;
+  userId: string;
+  type: 'GOOGLE_CALENDAR' | 'ZAPIER' | 'ASAAS' | 'OLX' | 'FACEBOOK_ADS';
+  name: string;
+  config: Record<string, any>; // API keys, webhooks, etc.
+  active: boolean;
+  connectedAt?: string;
+}
+
+export interface ChecklistTemplate {
+  id: string;
+  userId: string;
+  name: string; // e.g. "Padrão Compra", "Padrão Aluguel"
+  type: 'COMPRA' | 'ALUGUEL';
+  items: {
+    label: string;
+    section: string;
+    required: boolean;
+  }[];
+  isDefault: boolean;
+}
+
+export interface Subscription {
+  id: string;
+  userId: string;
+  plan: PlanType;
+  status: PlanStatus;
+  provider: PaymentProvider;
+  providerSubscriptionId?: string;
+  currentPeriodEnd: string;
+  cancelAtPeriodEnd: boolean;
+}
+
