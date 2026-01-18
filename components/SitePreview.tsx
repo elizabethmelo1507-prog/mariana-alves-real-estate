@@ -9,6 +9,9 @@ interface SitePreviewProps {
         description: string;
         template: 'Minimalista' | 'Luxo' | 'Foco em Leads';
         regions: string;
+        subdomain: string;
+        sections: Record<string, boolean>;
+        formFields: Record<string, boolean>;
     };
     viewMode: 'desktop' | 'mobile';
 }
@@ -37,7 +40,7 @@ const SitePreview: React.FC<SitePreviewProps> = ({ config, viewMode }) => {
                         <div className="size-3 rounded-full bg-green-400"></div>
                     </div>
                     <div className="flex-1 bg-white rounded-md px-3 py-1 text-xs text-gray-400 text-center font-mono">
-                        seu-site.brokerlink.com
+                        {config.subdomain || 'seu-site'}.brokerlink.com
                     </div>
                 </div>
             )}
@@ -108,27 +111,53 @@ const SitePreview: React.FC<SitePreviewProps> = ({ config, viewMode }) => {
                         <button className="w-full py-3 rounded-xl font-bold text-sm shadow-lg" style={{ backgroundColor: primaryColor, color: '#000' }}>
                             Ver Catálogo
                         </button>
-                        {config.template === 'Foco em Leads' && (
-                            <div className="p-4 rounded-xl border border-gray-200 mt-4 bg-gray-50 text-left">
-                                <p className="text-xs font-bold text-gray-500 mb-2 uppercase">Receba uma avaliação</p>
-                                <div className="h-8 bg-white border border-gray-200 rounded-lg mb-2"></div>
-                                <div className="h-8 bg-white border border-gray-200 rounded-lg mb-2"></div>
-                                <button className="w-full py-2 rounded-lg text-xs font-bold bg-black text-white">Enviar</button>
-                            </div>
-                        )}
                     </div>
                 </div>
 
-                {/* Quick Actions Grid */}
-                <div className="px-6 pb-12">
-                    <div className="grid grid-cols-2 gap-3">
-                        {[1, 2, 3, 4].map(i => (
-                            <div key={i} className="aspect-square rounded-2xl p-3 flex flex-col justify-between border border-gray-100" style={{ backgroundColor: i === 1 ? primaryColor : `${bgColor}f0` }}>
-                                <div className="size-8 rounded-full bg-white/20"></div>
-                                <div className="h-2 w-12 bg-current opacity-20 rounded-full"></div>
+                {/* Sections */}
+                <div className="px-6 pb-12 space-y-8">
+
+                    {/* Quick Actions / Services */}
+                    {config.sections['Serviços Exclusivos'] && (
+                        <div>
+                            <h3 className="font-bold mb-3" style={{ color: textColor }}>Serviços</h3>
+                            <div className="grid grid-cols-2 gap-3">
+                                {[1, 2, 3, 4].map(i => (
+                                    <div key={i} className="aspect-square rounded-2xl p-3 flex flex-col justify-between border border-gray-100" style={{ backgroundColor: i === 1 ? primaryColor : `${bgColor}f0` }}>
+                                        <div className="size-8 rounded-full bg-white/20"></div>
+                                        <div className="h-2 w-12 bg-current opacity-20 rounded-full"></div>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
+                        </div>
+                    )}
+
+                    {/* Testimonials */}
+                    {config.sections['Depoimentos'] && (
+                        <div>
+                            <h3 className="font-bold mb-3" style={{ color: textColor }}>O que dizem</h3>
+                            <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                                <div className="flex gap-1 text-yellow-400 mb-2">
+                                    {'★★★★★'.split('').map(s => <span key={Math.random()}>{s}</span>)}
+                                </div>
+                                <div className="h-2 w-full bg-gray-200 rounded-full mb-2"></div>
+                                <div className="h-2 w-2/3 bg-gray-200 rounded-full"></div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Contact Form */}
+                    <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                        <h3 className="font-bold mb-4 text-gray-900">Fale Comigo</h3>
+                        <div className="space-y-3">
+                            {config.formFields['Nome'] && <div className="h-10 bg-white border border-gray-200 rounded-lg w-full"></div>}
+                            {config.formFields['E-mail'] && <div className="h-10 bg-white border border-gray-200 rounded-lg w-full"></div>}
+                            {config.formFields['Telefone'] && <div className="h-10 bg-white border border-gray-200 rounded-lg w-full"></div>}
+                            {config.formFields['Mensagem'] && <div className="h-20 bg-white border border-gray-200 rounded-lg w-full"></div>}
+                            <button className="w-full py-3 rounded-xl font-bold text-sm" style={{ backgroundColor: primaryColor, color: '#000' }}>Enviar Mensagem</button>
+                        </div>
                     </div>
+
                 </div>
 
             </div>

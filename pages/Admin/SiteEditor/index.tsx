@@ -5,6 +5,7 @@ import SitePreview from '../../../components/SitePreview';
 const SiteEditor: React.FC = () => {
     const [activeTab, setActiveTab] = useState<'appearance' | 'content' | 'sections' | 'form'>('appearance');
     const [viewMode, setViewMode] = useState<'desktop' | 'mobile'>('mobile');
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [config, setConfig] = useState({
@@ -14,7 +15,23 @@ const SiteEditor: React.FC = () => {
         title: 'Mariana Alves | Real Estate',
         description: 'Imóveis de Alto Padrão em Manaus. Consultoria especializada e atendimento personalizado.',
         template: 'Minimalista' as 'Minimalista' | 'Luxo' | 'Foco em Leads',
-        regions: 'Ponta Negra, Adrianópolis, Vieiralves'
+        regions: 'Ponta Negra, Adrianópolis, Vieiralves',
+        subdomain: 'marianaalves',
+        sections: {
+            'Destaques da Semana': true,
+            'Serviços Exclusivos': true,
+            'Depoimentos': true,
+            'Sobre Mim': true,
+            'FAQ': true
+        } as Record<string, boolean>,
+        formFields: {
+            'Nome': true,
+            'Telefone': true,
+            'E-mail': true,
+            'Mensagem': true,
+            'Faixa de Preço': false,
+            'Bairro de Interesse': false
+        } as Record<string, boolean>
     });
 
     const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,6 +43,33 @@ const SiteEditor: React.FC = () => {
             };
             reader.readAsDataURL(file);
         }
+    };
+
+    const handlePublish = () => {
+        // Simulate API call
+        setTimeout(() => {
+            setShowSuccessModal(true);
+        }, 1000);
+    };
+
+    const toggleSection = (section: string) => {
+        setConfig(prev => ({
+            ...prev,
+            sections: {
+                ...prev.sections,
+                [section]: !prev.sections[section]
+            }
+        }));
+    };
+
+    const toggleFormField = (field: string) => {
+        setConfig(prev => ({
+            ...prev,
+            formFields: {
+                ...prev.formFields,
+                [field]: !prev.formFields[field]
+            }
+        }));
     };
 
     return (
@@ -51,7 +95,11 @@ const SiteEditor: React.FC = () => {
                                 <span className="material-symbols-outlined text-lg">desktop_mac</span>
                             </button>
                         </div>
-                        <button className="px-4 py-2 bg-primary text-dark-accent rounded-xl text-sm font-bold shadow-lg shadow-primary/20 hover:bg-green-400 transition-colors">
+                        <button
+                            onClick={handlePublish}
+                            className="px-4 py-2 bg-primary text-dark-accent rounded-xl text-sm font-bold shadow-lg shadow-primary/20 hover:bg-green-400 transition-colors flex items-center gap-2"
+                        >
+                            <span className="material-symbols-outlined text-lg">rocket_launch</span>
                             Publicar Alterações
                         </button>
                     </div>
@@ -173,6 +221,20 @@ const SiteEditor: React.FC = () => {
                             {activeTab === 'content' && (
                                 <div className="space-y-4">
                                     <div>
+                                        <label className="block text-xs font-bold text-gray-500 mb-2">Subdomínio</label>
+                                        <div className="flex items-center">
+                                            <input
+                                                type="text"
+                                                className="flex-1 px-3 py-2 rounded-l-lg border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm text-right"
+                                                value={config.subdomain}
+                                                onChange={(e) => setConfig({ ...config, subdomain: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '') })}
+                                            />
+                                            <div className="bg-gray-100 px-3 py-2 rounded-r-lg border border-l-0 border-gray-200 text-gray-500 text-sm font-medium">
+                                                .brokerlink.com
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
                                         <label className="block text-xs font-bold text-gray-500 mb-2">Título do Site</label>
                                         <input
                                             type="text"
@@ -201,11 +263,44 @@ const SiteEditor: React.FC = () => {
                                 </div>
                             )}
 
-                            {/* Placeholder for other tabs */}
-                            {(activeTab === 'sections' || activeTab === 'form') && (
-                                <div className="text-center py-10 text-gray-400">
-                                    <span className="material-symbols-outlined text-4xl mb-2">construction</span>
-                                    <p className="text-sm">Configurações avançadas em breve.</p>
+                            {activeTab === 'sections' && (
+                                <div className="space-y-4">
+                                    <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Gerenciar Seções</h3>
+                                    {Object.keys(config.sections).map(section => (
+                                        <div key={section} className="flex items-center justify-between p-3 border border-gray-100 rounded-xl bg-gray-50">
+                                            <div className="flex items-center gap-3">
+                                                <span className="material-symbols-outlined text-gray-400 cursor-move">drag_indicator</span>
+                                                <span className="font-bold text-gray-700 text-sm">{section}</span>
+                                            </div>
+                                            <label className="relative inline-flex items-center cursor-pointer">
+                                                <input
+                                                    type="checkbox"
+                                                    className="sr-only peer"
+                                                    checked={config.sections[section]}
+                                                    onChange={() => toggleSection(section)}
+                                                />
+                                                <div className="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {activeTab === 'form' && (
+                                <div className="space-y-4">
+                                    <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Campos do Formulário</h3>
+                                    <p className="text-xs text-gray-500 mb-4">Escolha quais informações você quer coletar dos seus leads.</p>
+                                    {Object.keys(config.formFields).map(field => (
+                                        <div key={field} className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg transition-colors">
+                                            <input
+                                                type="checkbox"
+                                                className="h-4 w-4 text-primary rounded border-gray-300 focus:ring-primary cursor-pointer"
+                                                checked={config.formFields[field]}
+                                                onChange={() => toggleFormField(field)}
+                                            />
+                                            <span className="text-gray-700 font-medium text-sm">{field}</span>
+                                        </div>
+                                    ))}
                                 </div>
                             )}
                         </div>
@@ -218,6 +313,38 @@ const SiteEditor: React.FC = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Success Modal */}
+            {showSuccessModal && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+                    <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl transform transition-all scale-100">
+                        <div className="size-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span className="material-symbols-outlined text-green-600 text-4xl">check_circle</span>
+                        </div>
+                        <h2 className="text-2xl font-black text-center text-dark-accent mb-2">Site Publicado!</h2>
+                        <p className="text-center text-gray-500 mb-8">Seu site já está no ar e pronto para receber visitas.</p>
+
+                        <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-8 flex items-center justify-between gap-3">
+                            <span className="text-sm font-mono text-gray-600 truncate">
+                                https://{config.subdomain}.brokerlink.com
+                            </span>
+                            <button
+                                onClick={() => navigator.clipboard.writeText(`https://${config.subdomain}.brokerlink.com`)}
+                                className="text-primary hover:text-green-600 font-bold text-xs uppercase"
+                            >
+                                Copiar
+                            </button>
+                        </div>
+
+                        <button
+                            onClick={() => setShowSuccessModal(false)}
+                            className="w-full py-3 bg-primary text-dark-accent rounded-xl font-bold hover:bg-green-400 transition-colors"
+                        >
+                            Voltar para o Editor
+                        </button>
+                    </div>
+                </div>
+            )}
         </AdminLayout>
     );
 };
