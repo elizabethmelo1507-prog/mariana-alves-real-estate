@@ -26,6 +26,7 @@ import Reactivation from './pages/Admin/Reactivation';
 import SignUp from './pages/Auth/SignUp';
 import OnboardingWizard from './pages/Admin/Onboarding/Wizard';
 import SiteEditor from './pages/Admin/SiteEditor';
+import UserSite from './pages/Public/UserSite';
 
 const App: React.FC = () => {
   return (
@@ -60,6 +61,7 @@ const App: React.FC = () => {
         <Route path="/admin/settings" element={<Settings />} />
         <Route path="/admin/reactivation" element={<Reactivation />} />
         <Route path="/admin/site-editor" element={<SiteEditor />} />
+        <Route path="/s/:slug" element={<UserSite />} />
 
         {/* SaaS / Onboarding Routes */}
         <Route path="/signup" element={<SignUp />} />

@@ -1,11 +1,13 @@
 import React, { useState, useRef } from 'react';
 import AdminLayout from '../../../components/AdminLayout';
 import SitePreview from '../../../components/SitePreview';
+import { supabase } from '../../../lib/supabase';
 
 const SiteEditor: React.FC = () => {
     const [activeTab, setActiveTab] = useState<'appearance' | 'content' | 'sections' | 'form'>('appearance');
     const [viewMode, setViewMode] = useState<'desktop' | 'mobile'>('mobile');
     const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [isPublishing, setIsPublishing] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [config, setConfig] = useState({
@@ -47,10 +49,34 @@ const SiteEditor: React.FC = () => {
         }
     };
 
-    const handlePublish = () => {
-        setTimeout(() => {
+    const handlePublish = async () => {
+        setIsPublishing(true);
+        try {
+            const { data: { user } } = await supabase.auth.getUser();
+
+            if (!user) {
+                alert('Você precisa estar logado para publicar.');
+                setIsPublishing(false);
+                return;
+            }
+
+            const { error } = await supabase
+                .from('site_configs')
+                .upsert({
+                    user_id: user.id,
+                    slug: config.subdomain,
+                    config: config
+                }, { onConflict: 'user_id' });
+
+            if (error) throw error;
+
             setShowSuccessModal(true);
-        }, 1000);
+        } catch (error) {
+            console.error('Error publishing site:', error);
+            alert('Erro ao publicar o site. Tente novamente.');
+        } finally {
+            setIsPublishing(false);
+        }
     };
 
     const toggleSection = (id: string) => {
@@ -102,10 +128,20 @@ const SiteEditor: React.FC = () => {
                         </div>
                         <button
                             onClick={handlePublish}
-                            className="px-4 py-2 bg-primary text-dark-accent rounded-xl text-sm font-bold shadow-lg shadow-primary/20 hover:bg-green-400 transition-colors flex items-center gap-2"
+                            disabled={isPublishing}
+                            className="px-4 py-2 bg-primary text-dark-accent rounded-xl text-sm font-bold shadow-lg shadow-primary/20 hover:bg-green-400 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            <span className="material-symbols-outlined text-lg">rocket_launch</span>
-                            Publicar Alterações
+                            {isPublishing ? (
+                                <>
+                                    <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-dark-accent"></span>
+                                    Publicando...
+                                </>
+                            ) : (
+                                <>
+                                    <span className="material-symbols-outlined text-lg">rocket_launch</span>
+                                    Publicar Alterações
+                                </>
+                            )}
                         </button>
                     </div>
                 </div>
@@ -204,8 +240,8 @@ const SiteEditor: React.FC = () => {
                                                     key={template}
                                                     onClick={() => setConfig({ ...config, template: template as any })}
                                                     className={`border rounded-xl p-3 cursor-pointer flex items-center gap-3 transition-all ${config.template === template
-                                                            ? 'border-primary bg-primary/5 shadow-sm'
-                                                            : 'border-gray-200 hover:border-gray-300'
+                                                        ? 'border-primary bg-primary/5 shadow-sm'
+                                                        : 'border-gray-200 hover:border-gray-300'
                                                         }`}
                                                 >
                                                     <div className={`size-10 rounded-lg ${template === 'Luxo' ? 'bg-black' : 'bg-gray-100'}`}></div>

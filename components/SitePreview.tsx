@@ -1,4 +1,5 @@
 import React from 'react';
+import LiveSiteContent from './LiveSiteContent';
 
 interface SitePreviewProps {
     config: {
@@ -18,100 +19,7 @@ interface SitePreviewProps {
 
 const SitePreview: React.FC<SitePreviewProps> = ({ config, viewMode }) => {
     const isMobile = viewMode === 'mobile';
-
-    // Dynamic styles based on config
-    const primaryColor = config.brandColor;
     const bgColor = config.backgroundColor;
-    const textColor = bgColor === '#ffffff' ? '#1a1a1a' : '#ffffff';
-    const secondaryTextColor = bgColor === '#ffffff' ? '#6b7280' : '#9ca3af';
-
-    const renderSection = (sectionId: string) => {
-        switch (sectionId) {
-            case 'stats':
-                return (
-                    <div className="grid grid-cols-3 gap-2 text-center mb-8">
-                        <div>
-                            <p className="text-xl font-black" style={{ color: primaryColor }}>150+</p>
-                            <p className="text-[10px] uppercase tracking-wider" style={{ color: secondaryTextColor }}>Imóveis</p>
-                        </div>
-                        <div>
-                            <p className="text-xl font-black" style={{ color: primaryColor }}>12</p>
-                            <p className="text-[10px] uppercase tracking-wider" style={{ color: secondaryTextColor }}>Anos</p>
-                        </div>
-                        <div>
-                            <p className="text-xl font-black" style={{ color: primaryColor }}>5k</p>
-                            <p className="text-[10px] uppercase tracking-wider" style={{ color: secondaryTextColor }}>Clientes</p>
-                        </div>
-                    </div>
-                );
-            case 'services':
-                return (
-                    <div className="mb-8">
-                        <h3 className="font-bold mb-3" style={{ color: textColor }}>Serviços</h3>
-                        <div className="grid grid-cols-2 gap-3">
-                            {[1, 2, 3, 4].map(i => (
-                                <div key={i} className="aspect-square rounded-2xl p-3 flex flex-col justify-between border border-gray-100" style={{ backgroundColor: i === 1 ? primaryColor : `${bgColor}f0` }}>
-                                    <div className="size-8 rounded-full bg-white/20"></div>
-                                    <div className="h-2 w-12 bg-current opacity-20 rounded-full"></div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                );
-            case 'featured':
-                return (
-                    <div className="mb-8">
-                        <h3 className="font-bold mb-3" style={{ color: textColor }}>Destaques</h3>
-                        <div className="flex overflow-x-auto gap-3 pb-2 hide-scrollbar">
-                            {[1, 2, 3].map(i => (
-                                <div key={i} className="min-w-[200px] h-32 bg-gray-200 rounded-xl relative overflow-hidden shrink-0">
-                                    <div className="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/80 to-transparent">
-                                        <div className="h-2 w-20 bg-white/50 rounded-full mb-1"></div>
-                                        <div className="h-2 w-10 bg-white/30 rounded-full"></div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                );
-            case 'testimonials':
-                return (
-                    <div className="mb-8">
-                        <h3 className="font-bold mb-3" style={{ color: textColor }}>O que dizem</h3>
-                        <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100">
-                            <div className="flex gap-1 text-yellow-400 mb-2">
-                                {'★★★★★'.split('').map(s => <span key={Math.random()}>{s}</span>)}
-                            </div>
-                            <div className="h-2 w-full bg-gray-200 rounded-full mb-2"></div>
-                            <div className="h-2 w-2/3 bg-gray-200 rounded-full"></div>
-                        </div>
-                    </div>
-                );
-            case 'about':
-                return (
-                    <div className="mb-8 flex items-center gap-4">
-                        <div className="size-16 rounded-full bg-gray-200 shrink-0"></div>
-                        <div>
-                            <h3 className="font-bold mb-1" style={{ color: textColor }}>Sobre Mim</h3>
-                            <div className="h-2 w-32 bg-gray-200 rounded-full mb-1"></div>
-                            <div className="h-2 w-24 bg-gray-200 rounded-full"></div>
-                        </div>
-                    </div>
-                );
-            case 'faq':
-                return (
-                    <div className="mb-8">
-                        <h3 className="font-bold mb-3" style={{ color: textColor }}>FAQ</h3>
-                        <div className="space-y-2">
-                            <div className="h-8 bg-gray-50 rounded-lg w-full"></div>
-                            <div className="h-8 bg-gray-50 rounded-lg w-full"></div>
-                        </div>
-                    </div>
-                );
-            default:
-                return null;
-        }
-    };
 
     return (
         <div
@@ -121,7 +29,7 @@ const SitePreview: React.FC<SitePreviewProps> = ({ config, viewMode }) => {
         >
             {/* Fake Browser Bar for Desktop */}
             {!isMobile && (
-                <div className="bg-gray-100 border-b border-gray-200 px-4 py-2 flex items-center gap-2">
+                <div className="bg-gray-100 border-b border-gray-200 px-4 py-2 flex items-center gap-2 shrink-0">
                     <div className="flex gap-1.5">
                         <div className="size-3 rounded-full bg-red-400"></div>
                         <div className="size-3 rounded-full bg-yellow-400"></div>
@@ -135,7 +43,7 @@ const SitePreview: React.FC<SitePreviewProps> = ({ config, viewMode }) => {
 
             {/* Mobile Status Bar */}
             {isMobile && (
-                <div className="h-8 bg-black text-white flex justify-between items-center px-6 text-[10px] font-bold">
+                <div className="h-8 bg-black text-white flex justify-between items-center px-6 text-[10px] font-bold shrink-0">
                     <span>9:41</span>
                     <div className="flex gap-1">
                         <span className="material-symbols-outlined text-[14px]">signal_cellular_alt</span>
@@ -146,94 +54,8 @@ const SitePreview: React.FC<SitePreviewProps> = ({ config, viewMode }) => {
             )}
 
             {/* Content Container */}
-            <div className="h-full overflow-y-auto hide-scrollbar relative">
-
-                {/* Navbar */}
-                <nav className={`sticky top-0 z-10 backdrop-blur-md px-4 py-3 flex items-center justify-between border-b border-gray-100/10`} style={{ backgroundColor: `${bgColor}cc` }}>
-                    <div className="flex items-center gap-2">
-                        {config.logoUrl ? (
-                            <img src={config.logoUrl} className="h-8 w-auto object-contain" alt="Logo" />
-                        ) : (
-                            <div className="size-8 flex items-center justify-center rounded-lg" style={{ backgroundColor: primaryColor }}>
-                                <span className="material-symbols-outlined text-white text-sm">home</span>
-                            </div>
-                        )}
-                        {!isMobile && <span className="font-bold text-sm" style={{ color: textColor }}>{config.title}</span>}
-                    </div>
-                    <div className="flex gap-2">
-                        {!isMobile && (
-                            <>
-                                <div className="h-2 w-16 bg-gray-200 rounded-full"></div>
-                                <div className="h-2 w-16 bg-gray-200 rounded-full"></div>
-                            </>
-                        )}
-                        <div className="h-8 px-3 rounded-full flex items-center justify-center text-[10px] font-bold" style={{ backgroundColor: primaryColor, color: '#000' }}>
-                            Contato
-                        </div>
-                    </div>
-                </nav>
-
-                {/* Hero Section (Always First if enabled) */}
-                {config.sections.find(s => s.id === 'hero')?.enabled && (
-                    <div className="p-6 md:p-12 flex flex-col items-center text-center">
-                        {config.template === 'Luxo' && (
-                            <div className="w-full h-32 md:h-48 bg-gray-200 rounded-2xl mb-6 overflow-hidden relative">
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end justify-center p-4">
-                                    <p className="text-white text-xs font-bold uppercase tracking-widest">Alto Padrão</p>
-                                </div>
-                            </div>
-                        )}
-
-                        <div className="inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4" style={{ backgroundColor: `${primaryColor}20`, color: primaryColor }}>
-                            {config.regions}
-                        </div>
-
-                        <h1 className="text-2xl md:text-4xl font-black leading-tight mb-4" style={{ color: textColor }}>
-                            {config.title}
-                        </h1>
-
-                        <p className="text-sm md:text-base mb-8 max-w-md mx-auto" style={{ color: secondaryTextColor }}>
-                            {config.description}
-                        </p>
-
-                        <div className="flex flex-col w-full gap-3">
-                            <button className="w-full py-3 rounded-xl font-bold text-sm shadow-lg" style={{ backgroundColor: primaryColor, color: '#000' }}>
-                                Ver Catálogo
-                            </button>
-                        </div>
-                    </div>
-                )}
-
-                {/* Dynamic Sections */}
-                <div className="px-6 pb-12">
-                    {config.sections.map(section => {
-                        if (!section.enabled || section.id === 'hero') return null;
-                        return (
-                            <div key={section.id}>
-                                {renderSection(section.id)}
-                            </div>
-                        );
-                    })}
-
-                    {/* Contact Form (Always at bottom) */}
-                    <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 mt-8">
-                        <h3 className="font-bold mb-4 text-gray-900">Fale Comigo</h3>
-                        <div className="space-y-3">
-                            {config.formFields.map(field => {
-                                if (!field.enabled) return null;
-                                return (
-                                    <div key={field.id}>
-                                        <div className="h-10 bg-white border border-gray-200 rounded-lg w-full flex items-center px-3 text-xs text-gray-400">
-                                            {field.label} {field.required && <span className="text-red-500 ml-1">*</span>}
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                            <button className="w-full py-3 rounded-xl font-bold text-sm mt-2" style={{ backgroundColor: primaryColor, color: '#000' }}>Enviar Mensagem</button>
-                        </div>
-                    </div>
-                </div>
-
+            <div className="h-[calc(100%-32px)] md:h-[calc(100%-40px)] overflow-hidden">
+                <LiveSiteContent config={config} />
             </div>
         </div>
     );
