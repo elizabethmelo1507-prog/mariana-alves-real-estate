@@ -5,6 +5,7 @@ import { ContainerScroll } from '../../components/ui/container-scroll-animation'
 import { BlurFade } from '../../components/ui/blur-fade';
 import { AuroraBackground } from '../../components/ui/aurora-background';
 import { DashboardTour } from '../../components/landing/DashboardTour';
+import { PricingSection } from '../../components/landing/PricingSection';
 
 // --- COMPONENTE DE INTRODUÇÃO (SPLASH SCREEN) ---
 const IntroScreen = ({ onFinish }: { onFinish: () => void }) => {
@@ -215,90 +216,7 @@ const Landing: React.FC = () => {
             <DashboardTour />
 
             {/* Pricing Section */}
-            <section id="pricing" className="py-24 bg-white">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-black text-dark-accent mb-4">Escolha seu plano</h2>
-                        <p className="text-gray-500">Comece grátis e evolua conforme suas vendas aumentam.</p>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                        {/* Basic Plan */}
-                        <div className="p-8 rounded-3xl border border-gray-200 bg-white relative">
-                            <h3 className="text-xl font-bold text-gray-500 mb-2">Plano Básico</h3>
-                            <div className="flex items-baseline gap-1 mb-6">
-                                <span className="text-4xl font-black text-dark-accent">R$ 69,90</span>
-                                <span className="text-gray-400">/mês</span>
-                            </div>
-                            <p className="text-sm text-gray-500 mb-8">Ideal para corretores que estão começando a organizar sua carteira.</p>
-
-                            <ul className="space-y-4 mb-8">
-                                {[
-                                    'Catálogo de imóveis ilimitado',
-                                    'Site pronto (template padrão)',
-                                    'CRM completo (leads e funil)',
-                                    'Automação de mensagens básicas',
-                                    'Agenda de visitas',
-                                    'Controle financeiro básico',
-                                    'Suporte via chat/e-mail'
-                                ].map((item, i) => (
-                                    <li key={i} className="flex items-center gap-3 text-sm text-gray-600">
-                                        <span className="material-symbols-outlined text-primary text-lg">check_circle</span>
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
-
-                            <Link
-                                to="/signup"
-                                className="block w-full py-4 text-center border-2 border-dark-accent text-dark-accent rounded-xl font-bold hover:bg-dark-accent hover:text-white transition-all"
-                            >
-                                Assinar Básico
-                            </Link>
-                        </div>
-
-                        {/* Pro Plan */}
-                        <div className="p-8 rounded-3xl border-2 border-primary bg-gray-900 text-white relative shadow-2xl transform md:-translate-y-4">
-                            <div className="absolute top-0 right-0 bg-primary text-dark-accent text-xs font-bold px-3 py-1 rounded-bl-xl rounded-tr-2xl uppercase tracking-wider">
-                                Mais Popular
-                            </div>
-                            <h3 className="text-xl font-bold text-primary mb-2">Plano Pro</h3>
-                            <div className="flex items-baseline gap-1 mb-6">
-                                <span className="text-4xl font-black text-white">R$ 120,00</span>
-                                <span className="text-gray-400">/mês</span>
-                            </div>
-                            <p className="text-sm text-gray-400 mb-8">Para quem quer escalar vendas com personalização e consultoria.</p>
-
-                            <ul className="space-y-4 mb-8">
-                                <li className="font-bold text-white flex items-center gap-3 text-sm">
-                                    <span className="material-symbols-outlined text-primary text-lg">star</span>
-                                    Tudo do Básico, mais:
-                                </li>
-                                {[
-                                    'Personalização de site (Domínio Próprio)',
-                                    'Layout Premium Exclusivo',
-                                    'Reunião mensal de consultoria',
-                                    'Limites maiores de leads/automação',
-                                    'Biblioteca de conteúdo premium',
-                                    'Suporte prioritário (WhatsApp)'
-                                ].map((item, i) => (
-                                    <li key={i} className="flex items-center gap-3 text-sm text-gray-300">
-                                        <span className="material-symbols-outlined text-primary text-lg">check_circle</span>
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
-
-                            <Link
-                                to="/signup"
-                                className="block w-full py-4 text-center bg-primary text-dark-accent rounded-xl font-bold hover:bg-green-400 transition-all shadow-lg shadow-primary/20"
-                            >
-                                Assinar Pro
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <PricingSection />
 
             {/* Testimonials */}
             <section className="py-24 bg-gray-50">

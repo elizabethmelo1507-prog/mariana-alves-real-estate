@@ -10,7 +10,11 @@
   },
   "dependencies": {
     "@google/genai": "^1.36.0",
+    "@number-flow/react": "^0.5.10",
     "@supabase/supabase-js": "^2.90.1",
+    "@tsparticles/engine": "^3.9.1",
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.9.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.27.0",
     "openai": "^6.16.0",
