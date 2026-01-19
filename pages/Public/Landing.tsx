@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ContainerScroll } from '../../components/ui/container-scroll-animation';
@@ -58,6 +58,10 @@ const Landing: React.FC = () => {
         []
     );
 
+    const handleIntroFinish = useCallback(() => {
+        setShowIntro(false);
+    }, []);
+
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             if (titleNumber === titles.length - 1) {
@@ -74,7 +78,7 @@ const Landing: React.FC = () => {
 
             {/* Intro Screen */}
             {showIntro && (
-                <IntroScreen onFinish={() => setShowIntro(false)} />
+                <IntroScreen onFinish={handleIntroFinish} />
             )}
 
             {/* Navbar */}
