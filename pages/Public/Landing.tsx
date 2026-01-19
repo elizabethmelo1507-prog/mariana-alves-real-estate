@@ -92,12 +92,12 @@ const Landing: React.FC = () => {
                             { icon: 'chat', title: 'Automação', desc: 'Templates prontos pós‑contato, pós‑visita, pós‑proposta e reativação.' },
                             { icon: 'calendar_month', title: 'Gestão Completa', desc: 'Agende visitas, controle comissões, despesas e metas em um só lugar.' }
                         ].map((feature, i) => (
-                            <div key={i} className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                                <div className="size-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6">
+                            <div key={i} className="btn-liquido group bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                                <div className="size-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:bg-white group-hover:scale-110 transition-all duration-300">
                                     <span className="material-symbols-outlined text-3xl">{feature.icon}</span>
                                 </div>
-                                <h3 className="text-xl font-bold text-dark-accent mb-3">{feature.title}</h3>
-                                <p className="text-gray-500 leading-relaxed text-sm">{feature.desc}</p>
+                                <h3 className="text-xl font-bold text-dark-accent mb-3 group-hover:text-black transition-colors relative z-10">{feature.title}</h3>
+                                <p className="text-gray-500 leading-relaxed text-sm group-hover:text-gray-900 transition-colors relative z-10">{feature.desc}</p>
                             </div>
                         ))}
                     </div>
