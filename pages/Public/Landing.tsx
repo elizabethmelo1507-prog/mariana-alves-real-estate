@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { ContainerScroll } from '../../components/ui/container-scroll-animation';
 import { BlurFade } from '../../components/ui/blur-fade';
 import { AuroraBackground } from '../../components/ui/aurora-background';
@@ -51,6 +52,22 @@ const IntroScreen = ({ onFinish }: { onFinish: () => void }) => {
 
 const Landing: React.FC = () => {
     const [showIntro, setShowIntro] = useState(true);
+    const [titleNumber, setTitleNumber] = useState(0);
+    const titles = useMemo(
+        () => ["CRM", "Site", "Automação"],
+        []
+    );
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            if (titleNumber === titles.length - 1) {
+                setTitleNumber(0);
+            } else {
+                setTitleNumber(titleNumber + 1);
+            }
+        }, 2000);
+        return () => clearTimeout(timeoutId);
+    }, [titleNumber, titles]);
 
     return (
         <div className="min-h-screen bg-white font-sans text-gray-900">
@@ -102,8 +119,26 @@ const Landing: React.FC = () => {
                             </BlurFade>
 
                             <BlurFade delay={0.8} inView={!showIntro} duration={1.2}>
-                                <h1 className="text-4xl md:text-7xl font-black text-dark-accent tracking-tight mb-6 leading-tight max-w-5xl mx-auto">
-                                    Seu negócio imobiliário 24/7: <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-600">CRM, Site e Automação</span> em um único lugar.
+                                <h1 className="text-4xl md:text-7xl font-black text-dark-accent tracking-tight mb-6 leading-tight max-w-5xl mx-auto flex flex-col items-center gap-2">
+                                    <span>Seu negócio imobiliário 24/7:</span>
+                                    <span className="relative flex w-full justify-center overflow-hidden text-center h-[1.2em]">
+                                        {titles.map((title, index) => (
+                                            <motion.span
+                                                key={index}
+                                                className="absolute font-black text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-600"
+                                                initial={{ opacity: 0, y: 50 }}
+                                                animate={
+                                                    titleNumber === index
+                                                        ? { y: 0, opacity: 1 }
+                                                        : { y: titleNumber > index ? -50 : 50, opacity: 0 }
+                                                }
+                                                transition={{ type: "spring", stiffness: 50 }}
+                                            >
+                                                {title}
+                                            </motion.span>
+                                        ))}
+                                    </span>
+                                    <span>em um único lugar.</span>
                                 </h1>
                             </BlurFade>
 
