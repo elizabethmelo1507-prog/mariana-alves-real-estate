@@ -67,7 +67,7 @@ const Landing: React.FC = () => {
                         <div className="size-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
                             <span className="material-symbols-outlined text-dark-accent font-bold">domain</span>
                         </div>
-                        <span className="font-black text-xl tracking-tight text-dark-accent">Admin MA</span>
+                        <span className="font-black text-xl tracking-tight text-dark-accent">Broker Pilot</span>
                     </div>
                     <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
                         <a href="#features" className="hover:text-primary transition-colors">Funcionalidades</a>
@@ -342,7 +342,7 @@ const Landing: React.FC = () => {
                             <div className="size-8 bg-primary rounded-lg flex items-center justify-center">
                                 <span className="material-symbols-outlined text-dark-accent text-sm font-bold">domain</span>
                             </div>
-                            <span className="font-bold text-white text-lg">Admin MA</span>
+                            <span className="font-bold text-white text-lg">Broker Pilot</span>
                         </div>
                         <p className="text-sm max-w-xs">O sistema definitivo para corretores de imóveis que querem vender mais e trabalhar melhor.</p>
                     </div>
@@ -364,7 +364,7 @@ const Landing: React.FC = () => {
                     </div>
                 </div>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-gray-800 text-center text-xs">
-                    © 2024 Admin MA. Todos os direitos reservados.
+                    © 2024 Broker Pilot. Todos os direitos reservados.
                 </div>
             </footer>
         </div>
