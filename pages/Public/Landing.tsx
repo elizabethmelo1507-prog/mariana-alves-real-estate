@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ContainerScroll } from '../../components/ui/container-scroll-animation';
 import { BlurFade } from '../../components/ui/blur-fade';
 import { AuroraBackground } from '../../components/ui/aurora-background';
+import { DashboardTour } from '../../components/landing/DashboardTour';
 
 // --- COMPONENTE DE INTRODUÇÃO (SPLASH SCREEN) ---
 const IntroScreen = ({ onFinish }: { onFinish: () => void }) => {
@@ -209,6 +210,9 @@ const Landing: React.FC = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Dashboard Tour Section */}
+            <DashboardTour />
 
             {/* Pricing Section */}
             <section id="pricing" className="py-24 bg-white">
