@@ -3,6 +3,17 @@
 @tailwind utilities;
 
 /* * CONFIGURAÇÃO GERAL */
+:root {
+    --white: #ffffff;
+    --black: #000000;
+    --transparent: transparent;
+    --blue-500: #3b82f6;
+    --indigo-300: #a5b4fc;
+    --blue-300: #93c5fd;
+    --violet-200: #ddd6fe;
+    --blue-400: #60a5fa;
+}
+
 body {
     font-family: 'Manrope', sans-serif;
     /* Keeping existing font */

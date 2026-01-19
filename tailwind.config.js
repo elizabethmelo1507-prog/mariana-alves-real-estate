@@ -20,6 +20,19 @@ export default {
                 "display": ["Manrope", "sans-serif"],
                 "sans": ["Manrope", "sans-serif"]
             },
+            animation: {
+                aurora: "aurora 60s linear infinite",
+            },
+            keyframes: {
+                aurora: {
+                    from: {
+                        backgroundPosition: "50% 50%, 50% 50%",
+                    },
+                    to: {
+                        backgroundPosition: "350% 50%, 350% 50%",
+                    },
+                },
+            },
         },
     },
     plugins: [],

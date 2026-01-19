@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ContainerScroll } from '../../components/ui/container-scroll-animation';
 import { BlurFade } from '../../components/ui/blur-fade';
+import { AuroraBackground } from '../../components/ui/aurora-background';
 
 // --- COMPONENTE DE INTRODUÇÃO (SPLASH SCREEN) ---
 const IntroScreen = ({ onFinish }: { onFinish: () => void }) => {
@@ -88,8 +89,7 @@ const Landing: React.FC = () => {
             </nav>
 
             {/* Hero Section */}
-            <section className="relative bg-white overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 pointer-events-none"></div>
+            <AuroraBackground className="h-auto min-h-screen overflow-hidden">
 
                 <ContainerScroll
                     titleComponent={
@@ -140,7 +140,7 @@ const Landing: React.FC = () => {
                         draggable={false}
                     />
                 </ContainerScroll>
-            </section>
+            </AuroraBackground>
 
             {/* Features Section */}
             <section id="features" className="py-24 bg-gray-50">
