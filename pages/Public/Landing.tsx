@@ -7,6 +7,7 @@ import { AuroraBackground } from '../../components/ui/aurora-background';
 import { DashboardTour } from '../../components/landing/DashboardTour';
 import { PricingSection } from '../../components/landing/PricingSection';
 import { TestimonialsSection } from '../../components/landing/TestimonialsSection';
+import { Navbar } from '../../components/landing/Navbar';
 
 // --- COMPONENTE DE INTRODUÇÃO (SPLASH SCREEN) ---
 const IntroScreen = ({ onFinish }: { onFinish: () => void }) => {
@@ -85,32 +86,9 @@ const Landing: React.FC = () => {
             )}
 
             {/* Navbar */}
-            <nav className={`sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 transition-all duration-1000 ${!showIntro ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        <div className="size-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
-                            <span className="material-symbols-outlined text-dark-accent font-bold">domain</span>
-                        </div>
-                        <span className="font-black text-xl tracking-tight text-dark-accent">Broker Pilot</span>
-                    </div>
-                    <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
-                        <a href="#features" className="hover:text-primary transition-colors">Funcionalidades</a>
-                        <a href="#pricing" className="hover:text-primary transition-colors">Planos</a>
-                        <a href="#faq" className="hover:text-primary transition-colors">FAQ</a>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <Link to="/admin/login" className="text-sm font-bold text-gray-600 hover:text-primary transition-colors">
-                            Entrar
-                        </Link>
-                        <Link
-                            to="/signup"
-                            className="px-5 py-2.5 bg-primary text-dark-accent rounded-xl text-sm font-bold shadow-lg shadow-primary/20 hover:bg-green-400 transition-all hover:-translate-y-0.5"
-                        >
-                            Criar Conta
-                        </Link>
-                    </div>
-                </div>
-            </nav>
+            <div className={`transition-all duration-1000 ${!showIntro ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
+                <Navbar />
+            </div>
 
             {/* Hero Section */}
             <AuroraBackground className="h-auto min-h-screen overflow-hidden">
