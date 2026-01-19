@@ -33,14 +33,14 @@ const IntroScreen = ({ onFinish }: { onFinish: () => void }) => {
         <div
             className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white transition-opacity ease-in-out duration-[1500ms] ${screenVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         >
-            <section id="header" className={`flex flex-col items-center text-center transition-opacity duration-1000 ease-in-out ${textVisible ? 'opacity-100' : 'opacity-0'}`}>
+            <section id="header" className={`flex flex-col items-center text-center transition-opacity duration-1000 ease-in-out px-6 ${textVisible ? 'opacity-100' : 'opacity-0'}`}>
                 <BlurFade delay={0.25} inView={true}>
-                    <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none mb-2 text-dark-accent">
+                    <h2 className="text-2xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none mb-2 text-dark-accent">
                         Corretor,
                     </h2>
                 </BlurFade>
                 <BlurFade delay={0.5} inView={true}>
-                    <span className="text-xl text-pretty tracking-tighter sm:text-3xl xl:text-4xl/none text-gray-600">
+                    <span className="text-lg text-pretty tracking-tighter sm:text-3xl xl:text-4xl/none text-gray-600">
                         Já pensou em ter a sua Imobiliária particular? 🤔
                     </span>
                 </BlurFade>
@@ -93,7 +93,7 @@ const Landing: React.FC = () => {
 
                 <ContainerScroll
                     titleComponent={
-                        <div className="relative z-10 text-center mb-10">
+                        <div className="relative z-10 text-center mb-10 px-4">
                             <BlurFade delay={0.5} inView={!showIntro} duration={1.2}>
                                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 border border-green-100 text-green-700 text-xs font-bold uppercase tracking-wider mb-8 animate-fade-in">
                                     <span className="size-2 rounded-full bg-green-500 animate-pulse"></span>
@@ -102,13 +102,13 @@ const Landing: React.FC = () => {
                             </BlurFade>
 
                             <BlurFade delay={0.8} inView={!showIntro} duration={1.2}>
-                                <h1 className="text-5xl md:text-7xl font-black text-dark-accent tracking-tight mb-6 leading-tight max-w-5xl mx-auto">
+                                <h1 className="text-4xl md:text-7xl font-black text-dark-accent tracking-tight mb-6 leading-tight max-w-5xl mx-auto">
                                     Seu negócio imobiliário 24/7: <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-600">CRM, Site e Automação</span> em um único lugar.
                                 </h1>
                             </BlurFade>
 
                             <BlurFade delay={1.1} inView={!showIntro} duration={1.2}>
-                                <p className="text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed">
+                                <p className="text-lg md:text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed">
                                     Pare de perder leads e organize seu funil com o sistema mais completo para corretores de imóveis autônomos e imobiliárias.
                                 </p>
                             </BlurFade>
