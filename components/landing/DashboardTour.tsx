@@ -66,7 +66,7 @@ export function DashboardTour() {
                 <div className="text-center mb-16">
                     <BlurFade delay={0.2} inView={true}>
                         <h2 className="text-3xl md:text-4xl font-black text-dark-accent mb-4">
-                            Touro Guiado do Dashboard
+                            Tour Guiado do Dashboard
                         </h2>
                         <p className="text-gray-500 max-w-2xl mx-auto text-lg">
                             Tudo o que vem no <span className="text-primary font-bold">BrokerPilot</span>
