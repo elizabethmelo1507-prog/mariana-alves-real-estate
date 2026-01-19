@@ -1,12 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ContainerScroll } from '../../components/ui/container-scroll-animation';
+import { BlurFade } from '../../components/ui/blur-fade';
+
+// --- COMPONENTE DE INTRODUÇÃO (SPLASH SCREEN) ---
+const IntroScreen = ({ onFinish }: { onFinish: () => void }) => {
+    const [textVisible, setTextVisible] = useState(true);
+    const [screenVisible, setScreenVisible] = useState(true);
+
+    useEffect(() => {
+        const timerText = setTimeout(() => {
+            setTextVisible(false);
+        }, 3000);
+
+        const timerScreen = setTimeout(() => {
+            setScreenVisible(false);
+        }, 4000);
+
+        const timerFinish = setTimeout(() => {
+            onFinish();
+        }, 5500);
+
+        return () => {
+            clearTimeout(timerText);
+            clearTimeout(timerScreen);
+            clearTimeout(timerFinish);
+        };
+    }, [onFinish]);
+
+    return (
+        <div
+            className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white transition-opacity ease-in-out duration-[1500ms] ${screenVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        >
+            <section id="header" className={`flex flex-col items-center text-center transition-opacity duration-1000 ease-in-out ${textVisible ? 'opacity-100' : 'opacity-0'}`}>
+                <BlurFade delay={0.25} inView={true}>
+                    <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none mb-2 text-dark-accent">
+                        Corretor,
+                    </h2>
+                </BlurFade>
+                <BlurFade delay={0.5} inView={true}>
+                    <span className="text-xl text-pretty tracking-tighter sm:text-3xl xl:text-4xl/none text-gray-600">
+                        Já pensou em ter a sua Imobiliária particular? 🤔
+                    </span>
+                </BlurFade>
+            </section>
+        </div>
+    );
+};
 
 const Landing: React.FC = () => {
+    const [showIntro, setShowIntro] = useState(true);
+
     return (
         <div className="min-h-screen bg-white font-sans text-gray-900">
+
+            {/* Intro Screen */}
+            {showIntro && (
+                <IntroScreen onFinish={() => setShowIntro(false)} />
+            )}
+
             {/* Navbar */}
-            <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+            <nav className={`sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 transition-all duration-1000 ${!showIntro ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <div className="size-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
@@ -40,31 +94,42 @@ const Landing: React.FC = () => {
                 <ContainerScroll
                     titleComponent={
                         <div className="relative z-10 text-center mb-10">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 border border-green-100 text-green-700 text-xs font-bold uppercase tracking-wider mb-8 animate-fade-in">
-                                <span className="size-2 rounded-full bg-green-500 animate-pulse"></span>
-                                Novo Sistema 2.0
-                            </div>
-                            <h1 className="text-5xl md:text-7xl font-black text-dark-accent tracking-tight mb-6 leading-tight max-w-5xl mx-auto">
-                                Seu negócio imobiliário 24/7: <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-600">CRM, Site e Automação</span> em um único lugar.
-                            </h1>
-                            <p className="text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed">
-                                Pare de perder leads e organize seu funil com o sistema mais completo para corretores de imóveis autônomos e imobiliárias.
-                            </p>
-                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                                <Link
-                                    to="/signup"
-                                    className="w-full sm:w-auto px-8 py-4 bg-dark-accent text-white rounded-2xl text-lg font-bold shadow-xl hover:bg-black transition-all hover:-translate-y-1 flex items-center justify-center gap-2"
-                                >
-                                    Criar conta agora
-                                    <span className="material-symbols-outlined">arrow_forward</span>
-                                </Link>
-                                <a
-                                    href="#pricing"
-                                    className="w-full sm:w-auto px-8 py-4 bg-white text-dark-accent border border-gray-200 rounded-2xl text-lg font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
-                                >
-                                    Ver planos
-                                </a>
-                            </div>
+                            <BlurFade delay={0.5} inView={!showIntro} duration={1.2}>
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 border border-green-100 text-green-700 text-xs font-bold uppercase tracking-wider mb-8 animate-fade-in">
+                                    <span className="size-2 rounded-full bg-green-500 animate-pulse"></span>
+                                    Novo Sistema 2.0
+                                </div>
+                            </BlurFade>
+
+                            <BlurFade delay={0.8} inView={!showIntro} duration={1.2}>
+                                <h1 className="text-5xl md:text-7xl font-black text-dark-accent tracking-tight mb-6 leading-tight max-w-5xl mx-auto">
+                                    Seu negócio imobiliário 24/7: <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-600">CRM, Site e Automação</span> em um único lugar.
+                                </h1>
+                            </BlurFade>
+
+                            <BlurFade delay={1.1} inView={!showIntro} duration={1.2}>
+                                <p className="text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed">
+                                    Pare de perder leads e organize seu funil com o sistema mais completo para corretores de imóveis autônomos e imobiliárias.
+                                </p>
+                            </BlurFade>
+
+                            <BlurFade delay={1.4} inView={!showIntro} duration={1.2}>
+                                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                                    <Link
+                                        to="/signup"
+                                        className="w-full sm:w-auto px-8 py-4 bg-dark-accent text-white rounded-2xl text-lg font-bold shadow-xl hover:bg-black transition-all hover:-translate-y-1 flex items-center justify-center gap-2"
+                                    >
+                                        Criar conta agora
+                                        <span className="material-symbols-outlined">arrow_forward</span>
+                                    </Link>
+                                    <a
+                                        href="#pricing"
+                                        className="w-full sm:w-auto px-8 py-4 bg-white text-dark-accent border border-gray-200 rounded-2xl text-lg font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
+                                    >
+                                        Ver planos
+                                    </a>
+                                </div>
+                            </BlurFade>
                         </div>
                     }
                 >
@@ -92,13 +157,15 @@ const Landing: React.FC = () => {
                             { icon: 'chat', title: 'Automação', desc: 'Templates prontos pós‑contato, pós‑visita, pós‑proposta e reativação.' },
                             { icon: 'calendar_month', title: 'Gestão Completa', desc: 'Agende visitas, controle comissões, despesas e metas em um só lugar.' }
                         ].map((feature, i) => (
-                            <div key={i} className="btn-liquido group bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                                <div className="size-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:bg-white group-hover:scale-110 transition-all duration-300">
-                                    <span className="material-symbols-outlined text-3xl">{feature.icon}</span>
+                            <BlurFade key={i} delay={0.2 + (i * 0.2)} inView={!showIntro} duration={1}>
+                                <div className="btn-liquido group bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                                    <div className="size-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:bg-white group-hover:scale-110 transition-all duration-300">
+                                        <span className="material-symbols-outlined text-3xl">{feature.icon}</span>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-dark-accent mb-3 group-hover:text-black transition-colors relative z-10">{feature.title}</h3>
+                                    <p className="text-gray-500 leading-relaxed text-sm group-hover:text-gray-900 transition-colors relative z-10">{feature.desc}</p>
                                 </div>
-                                <h3 className="text-xl font-bold text-dark-accent mb-3 group-hover:text-black transition-colors relative z-10">{feature.title}</h3>
-                                <p className="text-gray-500 leading-relaxed text-sm group-hover:text-gray-900 transition-colors relative z-10">{feature.desc}</p>
-                            </div>
+                            </BlurFade>
                         ))}
                     </div>
                 </div>
