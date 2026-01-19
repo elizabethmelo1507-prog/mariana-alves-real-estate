@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ContainerScroll } from '../../components/ui/container-scroll-animation';
 
 const Landing: React.FC = () => {
     return (
@@ -33,65 +34,47 @@ const Landing: React.FC = () => {
             </nav>
 
             {/* Hero Section */}
-            <section className="relative pt-20 pb-32 overflow-hidden">
+            <section className="relative bg-white overflow-hidden">
                 <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 pointer-events-none"></div>
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 border border-green-100 text-green-700 text-xs font-bold uppercase tracking-wider mb-8 animate-fade-in">
-                        <span className="size-2 rounded-full bg-green-500 animate-pulse"></span>
-                        Novo Sistema 2.0
-                    </div>
-                    <h1 className="text-5xl md:text-7xl font-black text-dark-accent tracking-tight mb-6 leading-tight max-w-5xl mx-auto">
-                        Seu negócio imobiliário 24/7: <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-600">CRM, Site e Automação</span> em um único lugar.
-                    </h1>
-                    <p className="text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed">
-                        Pare de perder leads e organize seu funil com o sistema mais completo para corretores de imóveis autônomos e imobiliárias.
-                    </p>
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
-                        <Link
-                            to="/signup"
-                            className="w-full sm:w-auto px-8 py-4 bg-dark-accent text-white rounded-2xl text-lg font-bold shadow-xl hover:bg-black transition-all hover:-translate-y-1 flex items-center justify-center gap-2"
-                        >
-                            Criar conta agora
-                            <span className="material-symbols-outlined">arrow_forward</span>
-                        </Link>
-                        <a
-                            href="#pricing"
-                            className="w-full sm:w-auto px-8 py-4 bg-white text-dark-accent border border-gray-200 rounded-2xl text-lg font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
-                        >
-                            Ver planos
-                        </a>
-                    </div>
 
-                    {/* Dashboard Mockup */}
-                    <div className="relative max-w-5xl mx-auto rounded-3xl bg-gray-900 p-2 shadow-2xl ring-1 ring-gray-900/10">
-                        <div className="rounded-2xl overflow-hidden bg-white aspect-[16/9] relative group">
-                            {/* Abstract UI Representation */}
-                            <div className="absolute inset-0 bg-gray-50 flex">
-                                {/* Sidebar */}
-                                <div className="w-64 bg-gray-900 h-full p-4 hidden md:block">
-                                    <div className="h-8 w-8 bg-primary rounded-lg mb-8"></div>
-                                    <div className="space-y-3">
-                                        {[1, 2, 3, 4, 5].map(i => <div key={i} className="h-4 w-3/4 bg-white/10 rounded"></div>)}
-                                    </div>
-                                </div>
-                                {/* Main Content */}
-                                <div className="flex-1 p-8">
-                                    <div className="flex justify-between items-center mb-8">
-                                        <div className="h-8 w-48 bg-gray-200 rounded-lg"></div>
-                                        <div className="h-10 w-32 bg-primary rounded-lg"></div>
-                                    </div>
-                                    <div className="grid grid-cols-3 gap-6 mb-8">
-                                        {[1, 2, 3].map(i => <div key={i} className="h-32 bg-white rounded-xl shadow-sm border border-gray-100"></div>)}
-                                    </div>
-                                    <div className="h-64 bg-white rounded-xl shadow-sm border border-gray-100"></div>
-                                </div>
+                <ContainerScroll
+                    titleComponent={
+                        <div className="relative z-10 text-center mb-10">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 border border-green-100 text-green-700 text-xs font-bold uppercase tracking-wider mb-8 animate-fade-in">
+                                <span className="size-2 rounded-full bg-green-500 animate-pulse"></span>
+                                Novo Sistema 2.0
                             </div>
-                            <div className="absolute inset-0 flex items-center justify-center bg-black/5 group-hover:bg-transparent transition-colors">
-                                <p className="text-gray-400 font-mono text-sm opacity-50">Dashboard Preview</p>
+                            <h1 className="text-5xl md:text-7xl font-black text-dark-accent tracking-tight mb-6 leading-tight max-w-5xl mx-auto">
+                                Seu negócio imobiliário 24/7: <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-600">CRM, Site e Automação</span> em um único lugar.
+                            </h1>
+                            <p className="text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed">
+                                Pare de perder leads e organize seu funil com o sistema mais completo para corretores de imóveis autônomos e imobiliárias.
+                            </p>
+                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                                <Link
+                                    to="/signup"
+                                    className="w-full sm:w-auto px-8 py-4 bg-dark-accent text-white rounded-2xl text-lg font-bold shadow-xl hover:bg-black transition-all hover:-translate-y-1 flex items-center justify-center gap-2"
+                                >
+                                    Criar conta agora
+                                    <span className="material-symbols-outlined">arrow_forward</span>
+                                </Link>
+                                <a
+                                    href="#pricing"
+                                    className="w-full sm:w-auto px-8 py-4 bg-white text-dark-accent border border-gray-200 rounded-2xl text-lg font-bold hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
+                                >
+                                    Ver planos
+                                </a>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    }
+                >
+                    <img
+                        src="/dashboard-preview.jpg"
+                        alt="Dashboard Preview"
+                        className="mx-auto rounded-2xl object-cover h-full w-full object-left-top"
+                        draggable={false}
+                    />
+                </ContainerScroll>
             </section>
 
             {/* Features Section */}
