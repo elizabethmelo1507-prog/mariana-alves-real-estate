@@ -20,7 +20,7 @@ const modules = [
         id: 'crm',
         title: 'Leads & CRM',
         subtitle: 'Funil de fechamento',
-        icon: 'funnel_metrics',
+        icon: 'filter_alt',
         howItWorks: [
             'Lead entra pelo site/catálogo e já chega com nome + telefone + imóvel de interesse.',
             'Funil por etapas (novo → contato → visita → proposta → fechamento).',
@@ -150,7 +150,7 @@ export const DashboardTour: React.FC = () => {
                                     : 'bg-gray-50 text-gray-500 hover:bg-gray-100'
                                     }`}
                             >
-                                <div className={`size-10 rounded-lg flex items-center justify-center ${activeTab === index ? 'bg-primary text-dark-accent' : 'bg-white text-gray-400'
+                                <div className={`size-10 rounded-lg flex items-center justify-center overflow-hidden ${activeTab === index ? 'bg-primary text-dark-accent' : 'bg-white text-gray-400'
                                     }`}>
                                     <span className="material-symbols-outlined">{module.icon}</span>
                                 </div>
@@ -178,7 +178,7 @@ export const DashboardTour: React.FC = () => {
                                 className="bg-gray-50 rounded-3xl p-8 md:p-12 border border-gray-200 h-full flex flex-col"
                             >
                                 <div className="flex items-center gap-4 mb-8">
-                                    <div className="size-14 bg-primary rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20">
+                                    <div className="size-14 bg-primary rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20 overflow-hidden">
                                         <span className="material-symbols-outlined text-3xl text-dark-accent">
                                             {modules[activeTab].icon}
                                         </span>
