@@ -31,12 +31,42 @@ const testimonials = [
         image: "/testimonials/user5.jpg",
         name: "Juliana Mendes",
         role: "Diretora Comercial"
+    },
+    {
+        text: "A apresentação dos imóveis no site é impecável. Meus clientes de alto padrão elogiam a sofisticação e a facilidade de navegação.",
+        image: "/testimonials/user6.jpg",
+        name: "Renato Oliveira",
+        role: "Corretor de Alto Padrão"
+    },
+    {
+        text: "O funil de vendas visual me deu clareza sobre onde focar. Minha taxa de conversão dobrou em dois meses de uso.",
+        image: "/testimonials/user7.jpg",
+        name: "Camila Rocha",
+        role: "Gestora de Vendas"
+    },
+    {
+        text: "Nunca mais perdi uma visita. O sistema de agendamento e lembretes é perfeito para quem tem a agenda cheia.",
+        image: "/testimonials/user8.jpg",
+        name: "Felipe Santos",
+        role: "Consultor Imobiliário"
+    },
+    {
+        text: "Comecei agora e o Broker Pilot foi essencial. O site pronto me deu credibilidade imediata no mercado.",
+        image: "/testimonials/user9.jpg",
+        name: "André Martins",
+        role: "Corretor Iniciante"
+    },
+    {
+        text: "Gerenciar múltiplas carteiras ficou simples. A visão geral do dashboard é exatamente o que eu precisava para escalar.",
+        image: "/testimonials/user10.jpg",
+        name: "Lucas Pereira",
+        role: "Diretor de Expansão"
     }
 ];
 
-const firstColumn = testimonials.slice(0, 3);
-const secondColumn = testimonials.slice(2, 5); // Overlap slightly for visual density or just split
-const thirdColumn = testimonials.slice(0, 5).reverse(); // Mix it up
+const firstColumn = testimonials.slice(0, 4);
+const secondColumn = testimonials.slice(3, 7);
+const thirdColumn = testimonials.slice(6, 10);
 
 export const TestimonialsSection = () => {
     return (
