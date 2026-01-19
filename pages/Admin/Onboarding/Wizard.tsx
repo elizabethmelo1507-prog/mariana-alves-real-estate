@@ -20,11 +20,56 @@ const OnboardingWizard: React.FC = () => {
         if (step > 1) setStep(step - 1);
     };
 
-    const handleFinish = () => {
-        // Save data to Supabase (Mocked)
-        console.log('Saving onboarding data:', formData);
-        // Redirect to Dashboard
-        navigate('/admin/dashboard');
+    const handleFinish = async () => {
+        try {
+            const { data: { user } } = await import('../../../lib/supabase').then(m => m.supabase.auth.getUser());
+
+            if (user) {
+                const { supabase } = await import('../../../lib/supabase');
+
+                // Save initial site config
+                const initialConfig = {
+                    brandColor: formData.primaryColor,
+                    backgroundColor: '#ffffff',
+                    logoUrl: '',
+                    title: formData.brandName,
+                    description: 'Imóveis de Alto Padrão. Consultoria especializada.',
+                    template: formData.template,
+                    regions: '',
+                    subdomain: formData.subdomain,
+                    sections: [
+                        { id: 'hero', label: 'Capa (Hero)', enabled: true, fixed: true },
+                        { id: 'stats', label: 'Estatísticas Rápidas', enabled: true },
+                        { id: 'services', label: 'Serviços Exclusivos', enabled: true },
+                        { id: 'featured', label: 'Destaques da Semana', enabled: true },
+                        { id: 'testimonials', label: 'Depoimentos', enabled: true },
+                        { id: 'about', label: 'Sobre Mim', enabled: true },
+                        { id: 'faq', label: 'Perguntas Frequentes', enabled: true }
+                    ],
+                    formFields: [
+                        { id: 'name', label: 'Nome', enabled: true, required: true },
+                        { id: 'phone', label: 'Telefone (WhatsApp)', enabled: true, required: true },
+                        { id: 'email', label: 'E-mail', enabled: true, required: false },
+                        { id: 'message', label: 'Mensagem', enabled: true, required: false }
+                    ]
+                };
+
+                const { error } = await supabase
+                    .from('site_configs')
+                    .upsert({
+                        user_id: user.id,
+                        slug: formData.subdomain,
+                        config: initialConfig
+                    }, { onConflict: 'user_id' });
+
+                if (error) throw error;
+            }
+
+            navigate('/admin/dashboard');
+        } catch (error) {
+            console.error('Error saving onboarding data:', error);
+            alert('Erro ao salvar configurações. Tente novamente.');
+        }
     };
 
     return (

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import AdminLayout from '../../../components/AdminLayout';
 import SitePreview from '../../../components/SitePreview';
 import { supabase } from '../../../lib/supabase';
@@ -9,6 +9,31 @@ const SiteEditor: React.FC = () => {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [isPublishing, setIsPublishing] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchConfig = async () => {
+            try {
+                const { data: { user } } = await supabase.auth.getUser();
+                if (user) {
+                    const { data, error } = await supabase
+                        .from('site_configs')
+                        .select('config')
+                        .eq('user_id', user.id)
+                        .single();
+
+                    if (data && data.config) {
+                        setConfig(prev => ({ ...prev, ...data.config }));
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching site config:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchConfig();
+    }, []);
 
     const [config, setConfig] = useState({
         brandColor: '#00ff88',
