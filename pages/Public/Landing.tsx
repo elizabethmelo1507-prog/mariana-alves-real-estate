@@ -6,6 +6,7 @@ import { BlurFade } from '../../components/ui/blur-fade';
 import { AuroraBackground } from '../../components/ui/aurora-background';
 import { DashboardTour } from '../../components/landing/DashboardTour';
 import { PricingSection } from '../../components/landing/PricingSection';
+import { TestimonialsSection } from '../../components/landing/TestimonialsSection';
 
 // --- COMPONENTE DE INTRODUÇÃO (SPLASH SCREEN) ---
 const IntroScreen = ({ onFinish }: { onFinish: () => void }) => {
@@ -219,42 +220,7 @@ const Landing: React.FC = () => {
             <PricingSection />
 
             {/* Testimonials */}
-            <section className="py-24 bg-gray-50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-black text-dark-accent mb-4">Por que escolher nosso sistema?</h2>
-                        <div className="flex items-center justify-center gap-2 text-yellow-400 mb-2">
-                            <span className="material-symbols-outlined fill-current">star</span>
-                            <span className="material-symbols-outlined fill-current">star</span>
-                            <span className="material-symbols-outlined fill-current">star</span>
-                            <span className="material-symbols-outlined fill-current">star</span>
-                            <span className="material-symbols-outlined fill-current">star</span>
-                        </div>
-                        <p className="text-gray-500 font-bold">+120 corretores satisfeitos</p>
-                    </div>
-
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {[
-                            { name: 'Carlos Mendes', role: 'Corretor em SP', text: 'A organização do meu dia a dia mudou da água pro vinho. Não perco mais nenhum lead por esquecimento.' },
-                            { name: 'Fernanda Lima', role: 'Imobiliária Lima', text: 'O site ficou pronto muito rápido e meus clientes elogiam muito a facilidade de ver os imóveis.' },
-                            { name: 'Roberto Souza', role: 'Autônomo', text: 'Fechei 3x mais rápido depois que comecei a usar as automações de mensagem. Recomendo demais!' }
-                        ].map((t, i) => (
-                            <div key={i} className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                                <p className="text-gray-600 italic mb-6">"{t.text}"</p>
-                                <div className="flex items-center gap-3">
-                                    <div className="size-10 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-500">
-                                        {t.name[0]}
-                                    </div>
-                                    <div>
-                                        <p className="font-bold text-dark-accent text-sm">{t.name}</p>
-                                        <p className="text-xs text-gray-400">{t.role}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+            <TestimonialsSection />
 
             {/* FAQ */}
             <section id="faq" className="py-24 bg-white">
