@@ -69,8 +69,8 @@ const Landing: React.FC = () => {
                     }
                 >
                     <img
-                        src="/dashboard-preview.jpg"
-                        alt="Dashboard Preview"
+                        src="https://bxnwsdepbjxkhsoucxvn.supabase.co/storage/v1/object/sign/video%20do%20ipad/semlogo-ezgif.com-video-to-webp-converter.webp?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9jMTU5YTZmNi1lODhhLTRmMTctOGQ0Yi1iODliMmJlZGExYWUiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyBkbyBpcGFkL3NlbWxvZ28tZXpnaWYuY29tLXZpZGVvLXRvLXdlYnAtY29udmVydGVyLndlYnAiLCJpYXQiOjE3Njg3ODM1NDcsImV4cCI6MjA4NDE0MzU0N30.fcixzwVNfS-TETG9AyFVVfdlHl-gUHPqsRHOkAJOf30"
+                        alt="Dashboard Animation"
                         className="mx-auto rounded-2xl object-cover h-full w-full object-left-top"
                         draggable={false}
                     />
